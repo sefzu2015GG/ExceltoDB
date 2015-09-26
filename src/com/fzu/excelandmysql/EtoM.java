@@ -24,7 +24,7 @@ public class EtoM {
 	public static void main(String[] argg0) {
 		System.out.println("test1");
 
-		String path = "E://Volcano//计算机 1 - 副本.xls";
+		String path = "data/计算机 1 - 副本.xls";
 
 		EtoM etom = new EtoM(path);
 		List<CourseBean> data = etom.getExcelFile();
