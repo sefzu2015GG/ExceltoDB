@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class CourseBean {
 
-	private Map<String, String> keyDate = new HashMap<>();
+	private Map<String, String> keyDate = new HashMap<String, String>();
 
 	private String[] key = { "grade", "major", "peoplenum", "coursename",
 			"type", "credit", "period", "testperiod", "fuckcomputerperiod",
@@ -24,7 +24,7 @@ public class CourseBean {
 	public String toString() {
 		String res = "CourseBean [";
 		for (int i = 0; i < key.length; i++) {
-			res += " "+keyDate.get(key[i]);
+			res += " " + keyDate.get(key[i]);
 		}
 		return res + "]";
 	}
