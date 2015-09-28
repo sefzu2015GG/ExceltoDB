@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fzu.sqlutils.ChoseSqlUtils;
 import com.fzu.sqlutils.CourseBean;
 import com.fzu.sqlutils.CourseSqlUtils;
 
@@ -32,11 +33,14 @@ public class EtoM {
 	private String filePath = null;
 	private String tablename = null;
 	private static CourseSqlUtils courseSqlUtils = null;
-
+	private static ChoseSqlUtils choseSqlUtils = null;
+	
+	
 	public EtoM(String filePath, String tablename) {
 		this.filePath = filePath;
 		this.tablename = tablename;
 		courseSqlUtils = new CourseSqlUtils(tablename);
+		choseSqlUtils = new ChoseSqlUtils(tablename);
 		List<CourseBean> data = getExcelFile();
 		outpr(data);
 		courseSqlUtils.insert(data);
@@ -47,6 +51,13 @@ public class EtoM {
 			courseSqlUtils = new CourseSqlUtils(tablename);
 		}
 		return courseSqlUtils;
+	}
+	
+	public static ChoseSqlUtils getChoseSqlUtils(String tablename) {
+		if(choseSqlUtils==null){
+			choseSqlUtils = new ChoseSqlUtils(tablename);
+		}
+		return choseSqlUtils;
 	}
 	
 	public void outpr(List<CourseBean> list) {
