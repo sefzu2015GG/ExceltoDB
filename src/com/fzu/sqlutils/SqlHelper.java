@@ -92,7 +92,7 @@ public class SqlHelper {
 	 * @param parmameters
 	 */
 	public static void excuteUpdateMultiParams(String[] sql,
-			String[][] parmameters) {
+			Object[][] parmameters) {
 		try {
 			connection = getConnection();
 			connection.setAutoCommit(false);
@@ -100,7 +100,7 @@ public class SqlHelper {
 			for (int i = 0; i < sql.length; i++) {
 				preparedStatement = connection.prepareStatement(sql[i]);
 				for (int j = 0; j < parmameters[i].length; j++) {
-					preparedStatement.setString(j + 1, parmameters[i][j]);
+					preparedStatement.setObject(j + 1, parmameters[i][j]);
 				}
 				preparedStatement.executeUpdate();
 			}
@@ -130,7 +130,7 @@ public class SqlHelper {
 	 * @param parmameters
 	 */
 	public static void excuteUpdateMultiParams(String sql,
-			String[][] parmameters) {
+			Object[][] parmameters) {
 		try {
 			connection = getConnection();
 			connection.setAutoCommit(false);
@@ -138,7 +138,7 @@ public class SqlHelper {
 			for (int i = 0; i < parmameters.length; i++) {
 				preparedStatement = connection.prepareStatement(sql);
 				for (int j = 0; j < parmameters[i].length; j++) {
-					preparedStatement.setString(j + 1, parmameters[i][j]);
+					preparedStatement.setObject(j + 1, parmameters[i][j]);
 				}
 				preparedStatement.executeUpdate();
 			}
@@ -167,7 +167,7 @@ public class SqlHelper {
 	 * @param sql
 	 * @param parameters
 	 */
-	public static void escuteUpdate(String sql, String[] parameters) {
+	public static void escuteUpdate(String sql, Object[] parameters) {
 
 		try {
 			connection = getConnection();
@@ -175,7 +175,7 @@ public class SqlHelper {
 
 			if (parameters != null) {
 				for (int i = 0; i < parameters.length; i++) {
-					preparedStatement.setString(i + 1, parameters[i]);
+					preparedStatement.setObject(i + 1, parameters[i]);
 				}
 			}
 			preparedStatement.executeUpdate();
@@ -189,13 +189,13 @@ public class SqlHelper {
 
 	}
 
-	public static ResultSet executeQuery(String sql, String[] parameters) {
+	public static ResultSet executeQuery(String sql, Object[] parameters) {
 		try {
 			connection = getConnection();
 			preparedStatement = connection.prepareStatement(sql);
 			if (parameters != null) {
 				for (int i = 0; i < parameters.length; i++) {
-					preparedStatement.setString(i + 1, parameters[i]);
+					preparedStatement.setObject(i + 1, parameters[i]);
 				}
 			}
 			resultSet = preparedStatement.executeQuery();
@@ -215,7 +215,7 @@ public class SqlHelper {
 	 * @param parameters
 	 */
 
-	public static void callProc(String sql, String[] parameters) {
+	public static void callProc(String sql, Object[] parameters) {
 		try {
 			connection = getConnection();
 			callableStatement = connection.prepareCall(sql);
@@ -242,7 +242,7 @@ public class SqlHelper {
 	 * @param inparameters
 	 * @return
 	 */
-	public static ResultSet callProcInput(String sql, String[] inparameters) {
+	public static ResultSet callProcInput(String sql, Object[] inparameters) {
 		try {
 			connection = getConnection();
 			callableStatement = connection.prepareCall(sql);

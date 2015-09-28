@@ -5,115 +5,89 @@ import java.util.Map;
 
 public class CourseBean {
 
-	private Map<String, String> keyDate = new HashMap<String, String>();
-
-	private String[] key = { "grade", "major", "peoplenum", "coursename",
-			"type", "credit", "period", "testperiod", "fuckcomputerperiod",
-			"weektime", "teachername", "remark", };
-
-	public void SetByKey(int j, String context) {
-		keyDate.put(key[j], context);
-	}
-
-	public String SetgetKey(int j) {
-
-		return keyDate.get(key[j]);
-	}
+	
 
 	@Override
 	public String toString() {
-		String res = "CourseBean [";
-		for (int i = 0; i < key.length; i++) {
-			res += " " + keyDate.get(key[i]);
-		}
-		return res + "]";
+		return "CourseBean [coursenum=" + coursenum + ", grade=" + grade
+				+ ", major=" + major + ", peoplenum=" + peoplenum
+				+ ", coursename=" + coursename + ", type=" + type + ", credit="
+				+ credit + ", period=" + period + ", testperiod=" + testperiod
+				+ ", fuckcomputerperiod=" + fuckcomputerperiod + "]";
 	}
 
-	private String grade;
-	private String major;
-	private String peoplenum;
-	private String coursename;
-	private String type;
-	private String credit;
-	private String period;
-	private String testperiod;
-	private String fuckcomputerperiod;
-	private String weektime;
-	private String teachername;
-	private String remark;
-
+	public String getCoursenum() {
+		return coursenum;
+	}
+	public void setCoursenum(String coursenum) {
+		this.coursenum = coursenum;
+	}
 	public String getGrade() {
 		return grade;
 	}
-
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
-
 	public String getMajor() {
 		return major;
 	}
-
 	public void setMajor(String major) {
 		this.major = major;
 	}
-
-	public String getPeoplenum() {
+	public int getPeoplenum() {
 		return peoplenum;
 	}
-
-	public void setPeoplenum(String peoplenum) {
+	public void setPeoplenum(int peoplenum) {
 		this.peoplenum = peoplenum;
 	}
-
 	public String getCoursename() {
 		return coursename;
 	}
-
 	public void setCoursename(String coursename) {
 		this.coursename = coursename;
 	}
-
 	public String getType() {
 		return type;
 	}
-
 	public void setType(String type) {
 		this.type = type;
 	}
-
-	public String getCredit() {
+	public float getCredit() {
 		return credit;
 	}
-
-	public void setCredit(String credit) {
+	public void setCredit(float credit) {
 		this.credit = credit;
 	}
-
-	public String getPeriod() {
+	public int getPeriod() {
 		return period;
 	}
-
-	public void setPeriod(String period) {
+	public void setPeriod(int period) {
 		this.period = period;
 	}
-
-	public String getTestperiod() {
+	public int getTestperiod() {
 		return testperiod;
 	}
-
-	public void setTestperiod(String testperiod) {
+	public void setTestperiod(int testperiod) {
 		this.testperiod = testperiod;
 	}
-
-	public String getFuckcomputerperiod() {
+	public int getFuckcomputerperiod() {
 		return fuckcomputerperiod;
 	}
-
-	public void setFuckcomputerperiod(String fuckcomputerperiod) {
+	public void setFuckcomputerperiod(int fuckcomputerperiod) {
 		this.fuckcomputerperiod = fuckcomputerperiod;
 	}
 
+	private String coursenum;
+	private String grade;
+	private String major;
+	private int peoplenum;
+	private String coursename;
+	private String type;
+	private float credit;
+	private int period;
+	private int testperiod;
+	private int fuckcomputerperiod;
+	
 	public String getWeektime() {
 		return weektime;
 	}
@@ -122,6 +96,15 @@ public class CourseBean {
 		this.weektime = weektime;
 	}
 
+	public void addWeektime(String weektime) {
+		if(this.weektime==null||this.weektime==""){
+			this.weektime=weektime;
+		}else{
+			this.weektime+=";";
+			this.weektime+=weektime;
+		}
+	}
+	
 	public String getTeachername() {
 		return teachername;
 	}
@@ -130,6 +113,16 @@ public class CourseBean {
 		this.teachername = teachername;
 	}
 
+	public void addTeachername(String teachername) {
+		if(this.teachername==null||this.teachername==""){
+			this.teachername=teachername;
+		}else{
+			this.teachername+=";";
+			this.teachername+=teachername;
+		}
+	}
+	
+	
 	public String getRemark() {
 		return remark;
 	}
@@ -137,5 +130,18 @@ public class CourseBean {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+	
+	public void addRemark(String remark) {
+		if(this.remark==null||this.remark==""){
+			this.remark=remark;
+		}else{
+			this.remark+=";";
+			this.remark+=remark;
+		}
+	}
 
+	private String weektime;
+	private String teachername;
+	private String remark;
+	
 }

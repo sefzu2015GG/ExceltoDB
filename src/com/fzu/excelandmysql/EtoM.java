@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fzu.sqlutils.CourseBean;
+import com.fzu.sqlutils.CourseSqlUtils;
 
 import jxl.Cell;
 import jxl.Sheet;
@@ -23,22 +24,31 @@ public class EtoM {
 	 */
 	public static void main(String[] argg0) {
 		System.out.println("test1");
-
 		String path = "data/计算机 1 - 副本.xls";
-
-		EtoM etom = new EtoM(path);
-		List<CourseBean> data = etom.getExcelFile();
-		etom.outpr(data);
-		
-		
+		String tname = "test1";
+		EtoM etom = new EtoM(path, tname);
 	}
 
-	String filePath = null;
+	private String filePath = null;
+	private String tablename = null;
+	private static CourseSqlUtils courseSqlUtils = null;
 
-	public EtoM(String filePath) {
+	public EtoM(String filePath, String tablename) {
 		this.filePath = filePath;
+		this.tablename = tablename;
+		courseSqlUtils = new CourseSqlUtils(tablename);
+		List<CourseBean> data = getExcelFile();
+		outpr(data);
+		courseSqlUtils.insert(data);
 	}
 
+	public static CourseSqlUtils getCourseSqlUtils( String tablename) {
+		if(courseSqlUtils==null){
+			courseSqlUtils = new CourseSqlUtils(tablename);
+		}
+		return courseSqlUtils;
+	}
+	
 	public void outpr(List<CourseBean> list) {
 
 		for (int i = 0; i < list.size(); i++) {
@@ -49,13 +59,15 @@ public class EtoM {
 
 	}
 
-	public List<CourseBean> getExcelFile() {
+	private List<CourseBean> getExcelFile() {
 		List<CourseBean> list = new ArrayList<CourseBean>();
+		FileInputStream fileInputStream = null;
 		try {
-			FileInputStream fileInputStream = new FileInputStream(filePath);
+			fileInputStream = new FileInputStream(filePath);
 
 			WorkbookSettings workbookSettings = new WorkbookSettings();
-			workbookSettings.setEncoding("utf-8");
+			// workbookSettings.setEncoding("utf-8");
+			workbookSettings.setEncoding("gbk");
 
 			Workbook workbook = Workbook.getWorkbook(fileInputStream);
 
@@ -70,27 +82,72 @@ public class EtoM {
 			for (int i = 0; i < row; i++) {
 				CourseBean bean = new CourseBean();
 
-				for (int j = 0; j < col; j++) {
-					bean.SetByKey(j, sheet.getCell(j, i).getContents());
-					// System.out.print(sheet.getCell(j, i).getContents());
+				bean.setCoursenum("031202" + i);
+
+				bean.setGrade(sheet.getCell(0, i).getContents()
+						.replaceAll(String.valueOf((char) 160), ""));
+
+				bean.setMajor(sheet.getCell(1, i).getContents()
+						.replaceAll(String.valueOf((char) 160), ""));
+
+				String peoplenum = sheet.getCell(2, i).getContents()
+						.replaceAll(String.valueOf((char) 160), "");
+				if (peoplenum == "") {
+					peoplenum = "0";
 				}
+				bean.setPeoplenum(Integer.parseInt(peoplenum));
+
+				bean.setCoursename(sheet.getCell(3, i).getContents()
+						.replaceAll(String.valueOf((char) 160), ""));
+
+				bean.setType(sheet.getCell(4, i).getContents()
+						.replaceAll(String.valueOf((char) 160), ""));
+
+				String credit = sheet.getCell(5, i).getContents()
+						.replaceAll(String.valueOf((char) 160), "");
+				if (credit == "") {
+					credit = "0";
+				}
+				bean.setCredit(Float.parseFloat(credit));
+
+				String period = sheet.getCell(6, i).getContents()
+						.replaceAll(String.valueOf((char) 160), "");
+				if (period == "") {
+					period = "0";
+				}
+				bean.setPeriod(Integer.parseInt(period));
+
+				String testperiod = sheet.getCell(7, i).getContents()
+						.replaceAll(String.valueOf((char) 160), "");
+				if (testperiod == "") {
+					testperiod = "0";
+				}
+				bean.setTestperiod(Integer.parseInt(testperiod));
+
+				String fuckcomputerperiod = sheet.getCell(8, i).getContents()
+						.replaceAll(String.valueOf((char) 160), "");
+				if (fuckcomputerperiod == "") {
+					fuckcomputerperiod = "0";
+				}
+				bean.setFuckcomputerperiod(Integer.parseInt(fuckcomputerperiod));
 				list.add(bean);
-				System.out.println();
-
 			}
-
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (BiffException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (fileInputStream != null) {
+				try {
+					fileInputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			fileInputStream = null;
 		}
 		return list;
-
 	}
-
 }
